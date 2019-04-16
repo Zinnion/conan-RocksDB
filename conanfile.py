@@ -44,14 +44,12 @@ class RocksdbConan(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include", src=("%s/include" % self.subfolder))
-
         if self.options.shared:
             self.copy("librocksdb.so", dst="lib", src=self.subfolder, keep_path=False)
         else:
             self.copy("librocksdb.a", dst="lib", src=self.subfolder, keep_path=False)
 
     def package_info(self):
-        #self.cpp_info.libs = ["rocksdb"]
         self.cpp_info.libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
             self.cpp_info.libs.append("pthread")

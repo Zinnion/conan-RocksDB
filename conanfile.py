@@ -19,7 +19,8 @@ class RocksdbConan(ConanFile):
     requires = (
         "zlib/1.2.11@conan/stable",
         "bzip2/1.0.6@conan/stable",
-        "lz4/1.8.3@zinnion/stable"
+        "lz4/1.8.3@zinnion/stable",
+	"snappy/1.1.7@zinnion/stable"
     )
 
     def source(self):
@@ -36,19 +37,21 @@ class RocksdbConan(ConanFile):
         with tools.chdir(self.subfolder):
             env_build = AutoToolsBuildEnvironment(self)
             env_build.fpic = True
-
-            if self.settings.build_type == "Debug":
-                env_build.make()  # $ make
+            if self.options.shared:
+                env_build.make(["shared_lib"])  # $ make shared_lib
             else:
-                if self.options.shared:
-                    env_build.make(["shared_lib"])  # $ make shared_lib
-                else:
-                    env_build.make(["static_lib"])  # $ make static_lib
+                env_build.make(["static_lib"])  # $ make static_lib
 
     def package(self):
-        pass
+        self.copy("*.h", dst="include", src=("%s/include" % self.subfolder))
+
+        if self.options.shared:
+            self.copy("librocksdb.so", dst="lib", src=self.subfolder, keep_path=False)
+        else:
+            self.copy("librocksdb.a", dst="lib", src=self.subfolder, keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = ["rocksdb"]
+        #self.cpp_info.libs = ["rocksdb"]
+        self.cpp_info.libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
             self.cpp_info.libs.append("pthread")

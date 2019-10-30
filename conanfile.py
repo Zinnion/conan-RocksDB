@@ -3,7 +3,7 @@ import os
 
 class RocksdbConan(ConanFile):
     name = "rocksdb"
-    version = "5.18.3"
+    version = "6.3.6"
     url = "https://github.com/Zinnion/conan-rocksdb"
     description = "A library that provides an embeddable, persistent key-value store for fast storage"
     topics = ("conan", "rocksdb", "keyvalue")
@@ -17,6 +17,7 @@ class RocksdbConan(ConanFile):
     source_subfolder = "source_subfolder"
 
     def requirements(self):
+        self.requires.add("OpenSSL/1.1.1b@zinnion/stable")
         self.requires.add("zlib/1.2.11@zinnion/stable")
         self.requires.add("bzip2/1.0.6@zinnion/stable")
         self.requires.add("lz4/1.8.3@zinnion/stable")
@@ -45,5 +46,3 @@ class RocksdbConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
-        if self.settings.os == "Linux":
-            self.cpp_info.libs.append("pthread")

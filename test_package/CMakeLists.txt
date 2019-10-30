@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(test_package)
 
-ADD_DEFINITIONS( "-std=c++11" )
-
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)

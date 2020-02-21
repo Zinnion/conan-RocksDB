@@ -3,7 +3,7 @@ import os
 
 class RocksdbConan(ConanFile):
     name = "rocksdb"
-    version = "6.3.6"
+    version = "6.6.4"
     url = "https://github.com/Zinnion/conan-rocksdb"
     description = "A library that provides an embeddable, persistent key-value store for fast storage"
     topics = ("conan", "rocksdb", "keyvalue")

@@ -17,7 +17,7 @@ class RocksdbConan(ConanFile):
     source_subfolder = "source_subfolder"
 
     def requirements(self):
-        self.requires.add("OpenSSL/1.1.1b@zinnion/stable")
+        self.requires.add("OpenSSL/1.1.1d@zinnion/stable")
         self.requires.add("zlib/1.2.11@zinnion/stable")
         self.requires.add("bzip2/1.0.6@zinnion/stable")
         self.requires.add("lz4/1.8.3@zinnion/stable")
